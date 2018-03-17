@@ -17,7 +17,7 @@ export class CardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.reducedID = this.card.bd_id.substring(17, 24);
+    this.reducedID = this.card.ordServ.substring(17, 24);
     
   }
 

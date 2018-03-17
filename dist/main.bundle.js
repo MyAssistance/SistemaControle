@@ -427,7 +427,7 @@ var CardComponent = (function () {
     function CardComponent() {
     }
     CardComponent.prototype.ngOnInit = function () {
-        this.reducedID = this.card.bd_id.substring(17, 24);
+        this.reducedID = this.card.ordServ.substring(17, 24);
     };
     CardComponent.prototype.dragStart = function (ev) {
         ev.dataTransfer.setData('text', ev.target.id);
@@ -960,7 +960,7 @@ var CardStore = (function () {
         this.cards[cardID].observacoes = card.observacoes;
         console.log("update" + this.cards[cardID].defeito);
     };
-    CardStore.prototype.newCard = function (estado, cpf, id, defeito, nome, telPrimario, data, periodo, endereco, marca, modelo, telSecundario, email, realizado, pecas, servico, maoObra, valorFinal, metPag, observacoes) {
+    CardStore.prototype.newCard = function (estado, cpf, id, defeito, nome, telPrimario, data, periodo, endereco, marca, modelo, telSecundario, email, realizado, pecas, servico, maoObra, valorFinal, metPag, observacoes, ordServ) {
         var card = new __WEBPACK_IMPORTED_MODULE_0__cardSchema__["a" /* CardSchema */]();
         card.estado = estado;
         card.cpf = cpf;
@@ -984,6 +984,7 @@ var CardStore = (function () {
         card.valorFinal = valorFinal;
         card.metPag = metPag;
         card.observacoes = observacoes;
+        card.ordServ = ordServ;
         return (this._addCard(card));
     };
     return CardStore;
@@ -1068,7 +1069,7 @@ var ClienteAtenderComponent = (function () {
             { value: 'Manhã' },
             { value: 'Tarde' }
         ];
-        this.reducedID = this.data.bd_id.substring(17, 24);
+        this.reducedID = this.data.ordServ.substring(17, 24);
     }
     ClienteAtenderComponent.prototype.onNoClick = function () {
         this.dialogRef.close();
@@ -1104,14 +1105,15 @@ var AtendimentoComponent = (function () {
             { value: 'Cheque' },
             { value: 'Dinheiro' },
         ];
-        this.reducedID = this.data.bd_id.substring(17, 24);
+        this.reducedID = this.data.ordServ.substring(17, 24);
+        console.log(this.reducedID);
     }
     AtendimentoComponent.prototype.onNoClick = function () {
         this.dialogRef.close();
     };
     AtendimentoComponent.prototype.thermalPrintAguardando = function () {
         var document = '<html> <body onload="window.print()"> <h3 style="display: inline-block" >Ordem de serviço</h3> <img style="display: inline-block; padding-left: 110px;" src="assets/images/logo-name75.png"> <br>\
-    <span> <strong> N° Ordem: </strong>' + this.data.bd_id.substring(17, 24) + '</span> <span>&nbsp &nbsp <strong> Cliente:</strong> ' + this.data.nome + '</span> <span>&nbsp &nbsp <strong>Data:</strong> ' + this.data.dia + "/" + this.data.mes + '</span> <br> <br> \
+    <span> <strong> N° Ordem: </strong>' + this.data.reducedID + '</span> <span>&nbsp &nbsp <strong> Cliente:</strong> ' + this.data.nome + '</span> <span>&nbsp &nbsp <strong>Data:</strong> ' + this.data.dia + "/" + this.data.mes + '</span> <br> <br> \
      <span><strong>Telefone:</strong> ' + this.data.telPrimario + '</span> <span>&nbsp &nbsp <strong>Marca:</strong> ' + this.data.marca + '</span> <span>&nbsp &nbsp <strong>Modelo:</strong> ' + this.data.modelo + '</span> <br> <br> \
     <span><strong>Defeito:</strong> ' + this.data.defeito + '</span> <br> <br> \
     <span><strong>Observações: </strong> ' + this.data.observacoes + '</span> <span style="float: right;"> __________________________ </span> </body> </html>';
@@ -1223,7 +1225,7 @@ var AcompanhamentoComponent = (function () {
             //Agora todos os dados estao na variavel data
             _this.auxData = data;
             for (var i = 0; i < _this.auxData.length; i++) {
-                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, null, null, null, null, null, null, data[i].observacoes);
+                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, null, null, null, null, null, null, data[i].observacoes, data[i]._id);
                 _this.lists[0].cards.push(cardId);
             }
         });
@@ -1231,7 +1233,7 @@ var AcompanhamentoComponent = (function () {
             //Agora todos os dados estao na variavel data
             _this.auxData = data;
             for (var i = 0; i < _this.auxData.length; i++) {
-                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, null, null, null, null, null, null, data[i].observacoes);
+                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, null, null, null, null, null, null, data[i].observacoes, data[i].ordServ);
                 _this.lists[1].cards.push(cardId);
             }
         });
@@ -1240,7 +1242,7 @@ var AcompanhamentoComponent = (function () {
             _this.auxData = data;
             console.log(_this.auxData);
             for (var i = 0; i < _this.auxData.length; i++) {
-                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes);
+                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes, data[i].ordServ);
                 _this.lists[2].cards.push(cardId);
             }
         });
@@ -1249,7 +1251,7 @@ var AcompanhamentoComponent = (function () {
             _this.auxData = data;
             console.log(_this.auxData);
             for (var i = 0; i < _this.auxData.length; i++) {
-                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes);
+                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes, data[i].ordServ);
                 _this.lists[3].cards.push(cardId);
             }
         });
@@ -1258,7 +1260,7 @@ var AcompanhamentoComponent = (function () {
             _this.auxData = data;
             console.log(_this.auxData);
             for (var i = 0; i < _this.auxData.length; i++) {
-                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes);
+                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes, data[i].ordServ);
                 _this.lists[4].cards.push(cardId);
             }
         });
@@ -1266,7 +1268,7 @@ var AcompanhamentoComponent = (function () {
             //Agora todos os dados estao na variavel data
             _this.auxData = data;
             for (var i = 0; i < _this.auxData.length; i++) {
-                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes);
+                var cardId = _this.cardStore.newCard("Orçamento", data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data), data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes, data[i].ordServ);
                 _this.lists[5].cards.push(cardId);
             }
         });
@@ -1275,10 +1277,11 @@ var AcompanhamentoComponent = (function () {
         var _this = this;
         //Get the card with the card id
         var card = this.cardStore.getCard(cardID);
+        console.log("Entrei no dialog;");
         //Open the pop up with the card infos
         var dialogRef = this.dialog.open(ClienteAtenderComponent, {
             width: '44vw',
-            data: { marca: card.marca, defeito: card.defeito, modelo: card.modelo, data: card.data, periodo: card.periodo }
+            data: card
         });
         //After the dialog is closed thats the called function
         dialogRef.afterClosed().subscribe(function (result) {
@@ -1288,6 +1291,7 @@ var AcompanhamentoComponent = (function () {
                 _this.sortByDate(newList, oldList, cardID);
                 //Associando as propriedades para enviar o json certinho
                 result.bd_id = card.bd_id;
+                card.ordServ = card.bd_id;
                 card.defeito = result.defeito;
                 card.marca = result.marca;
                 card.modelo = result.modelo;
@@ -1564,6 +1568,9 @@ var AcompanhamentoComponent = (function () {
     };
     AcompanhamentoComponent.prototype.clicked = function (event) {
         var target = event.target;
+        if (!Number.isInteger(parseInt(event.target.id))) {
+            return;
+        }
         //Loop trought the parent html element until get to the list it was dropped on
         while (target.className !== 'list') {
             target = target.parentNode;

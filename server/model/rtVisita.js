@@ -9,6 +9,7 @@ module.exports = function(ass){
 
 	//Definindo a estrutura da minha colection usuarios no db
 			var atendimento = Schema({
+				ordServ: String,
 				cpf: String,
 				defeito: String,
 				marca: String,

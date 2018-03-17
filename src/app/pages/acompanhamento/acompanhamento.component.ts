@@ -23,7 +23,7 @@ export class ClienteAtenderComponent implements OnInit {
 constructor(
     public dialogRef: MatDialogRef<ClienteAtenderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.reducedID = this.data.bd_id.substring(17, 24);
+      this.reducedID = this.data.ordServ.substring(17, 24);
      }
   
 
@@ -61,7 +61,9 @@ export class AtendimentoComponent implements OnInit {
  reducedID;
 
 constructor(public dialogRef: MatDialogRef<AtendimentoComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-  this.reducedID = this.data.bd_id.substring(17, 24);
+  
+  this.reducedID = this.data.ordServ.substring(17, 24);
+  console.log(this.reducedID);
 }
  
 
@@ -72,7 +74,7 @@ onNoClick(): void {
 
   thermalPrintAguardando(): void{
     var document = '<html> <body onload="window.print()"> <h3 style="display: inline-block" >Ordem de serviço</h3> <img style="display: inline-block; padding-left: 110px;" src="assets/images/logo-name75.png"> <br>\
-    <span> <strong> N° Ordem: </strong>'+ this.data.bd_id.substring(17, 24) +'</span> <span>&nbsp &nbsp <strong> Cliente:</strong> '+ this.data.nome +'</span> <span>&nbsp &nbsp <strong>Data:</strong> '+ this.data.dia + "/"+ this.data.mes +'</span> <br> <br> \
+    <span> <strong> N° Ordem: </strong>'+ this.data.reducedID +'</span> <span>&nbsp &nbsp <strong> Cliente:</strong> '+ this.data.nome +'</span> <span>&nbsp &nbsp <strong>Data:</strong> '+ this.data.dia + "/"+ this.data.mes +'</span> <br> <br> \
      <span><strong>Telefone:</strong> '+ this.data.telPrimario +'</span> <span>&nbsp &nbsp <strong>Marca:</strong> '+ this.data.marca +'</span> <span>&nbsp &nbsp <strong>Modelo:</strong> '+ this.data.modelo +'</span> <br> <br> \
     <span><strong>Defeito:</strong> '+ this.data.defeito +'</span> <br> <br> \
     <span><strong>Observações: </strong> '+ this.data.observacoes + '</span> <span style="float: right;"> __________________________ </span> </body> </html>';
@@ -222,7 +224,7 @@ export class AcompanhamentoComponent implements OnInit {
       this.auxData = data;
 
       for (var i = 0; i < this.auxData.length; i++) {
-          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, null, null, null, null, null, null, data[i].observacoes);
+          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, null, null, null, null, null, null, data[i].observacoes, data[i]._id);
           this.lists[0].cards.push(cardId)
       }
 
@@ -233,7 +235,7 @@ export class AcompanhamentoComponent implements OnInit {
       this.auxData = data;
 
       for (var i = 0; i < this.auxData.length; i++) {
-          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, null, null, null, null, null, null, data[i].observacoes);
+          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, null, null, null, null, null, null, data[i].observacoes, data[i].ordServ);
           this.lists[1].cards.push(cardId)
       }
 
@@ -244,7 +246,7 @@ export class AcompanhamentoComponent implements OnInit {
       this.auxData = data;
       console.log(this.auxData);
       for (var i = 0; i < this.auxData.length; i++) {
-          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes);
+          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes, data[i].ordServ);
           this.lists[2].cards.push(cardId)
       }
 
@@ -255,7 +257,7 @@ export class AcompanhamentoComponent implements OnInit {
       this.auxData = data;
       console.log(this.auxData);
       for (var i = 0; i < this.auxData.length; i++) {
-          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes);
+          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes, data[i].ordServ);
           this.lists[3].cards.push(cardId)
       }
 
@@ -266,7 +268,7 @@ export class AcompanhamentoComponent implements OnInit {
       this.auxData = data;
       console.log(this.auxData);
       for (var i = 0; i < this.auxData.length; i++) {
-          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes);
+          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes, data[i].ordServ);
           this.lists[4].cards.push(cardId)
       }
 
@@ -277,7 +279,7 @@ export class AcompanhamentoComponent implements OnInit {
       this.auxData = data;
 
       for (var i = 0; i < this.auxData.length; i++) {
-          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes);
+          const cardId = this.cardStore.newCard("Orçamento",  data[i].cpf, data[i]._id, data[i].defeito, data[i].nome, data[i].telPrimario, new Date(data[i].data) , data[i].periodo, data[i].endereco, data[i].marca, data[i].modelo, data[i].telSecundario, data[i].email, data[i].realizado, data[i].pecas, data[i].servico, data[i].maoObra, data[i].valorFinal, data[i].metPag, data[i].observacoes, data[i].ordServ);
           this.lists[5].cards.push(cardId)
       }
 
@@ -289,10 +291,11 @@ export class AcompanhamentoComponent implements OnInit {
    //Get the card with the card id
    var card = this.cardStore.getCard(cardID);
 
+   console.log("Entrei no dialog;");
    //Open the pop up with the card infos
    let dialogRef = this.dialog.open(ClienteAtenderComponent, {
       width: '44vw',
-      data: { marca: card.marca, defeito: card.defeito, modelo: card.modelo, data: card.data, periodo: card.periodo }
+      data: card
     });
 
    //After the dialog is closed thats the called function
@@ -305,6 +308,7 @@ export class AcompanhamentoComponent implements OnInit {
 
         //Associando as propriedades para enviar o json certinho
           result.bd_id = card.bd_id;
+          card.ordServ = card.bd_id;
           card.defeito = result.defeito;
           card.marca =  result.marca;
           card.modelo = result.modelo;
@@ -704,8 +708,11 @@ export class AcompanhamentoComponent implements OnInit {
   }
 
   clicked(event){
-  let target = event.target;
+    let target = event.target;
 
+    if(!Number.isInteger( parseInt(event.target.id))){
+      return;
+    }
     //Loop trought the parent html element until get to the list it was dropped on
     while (target.className !== 'list') {
       target = target.parentNode;
