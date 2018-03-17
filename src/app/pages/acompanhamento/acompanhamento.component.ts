@@ -60,14 +60,27 @@ export class AtendimentoComponent implements OnInit {
 
  reducedID;
 
-constructor(public dialogRef: MatDialogRef<AtendimentoComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-  
-  this.reducedID = this.data.ordServ.substring(17, 24);
-  console.log(this.reducedID);
-}
- 
+  constructor(public dialogRef: MatDialogRef<AtendimentoComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    
+    this.reducedID = this.data.ordServ.substring(17, 24);
+    console.log(this.reducedID);
+  }
+   
+  sum()
+  {
+    var value1, value2;
+    if(this.data.servico != null)
+      value1 = (this.data.servico).replace(",", ".");
+    else
+      value1 = 0;
+    if(this.data.maoObra != null)
+      value2 = (this.data.maoObra).replace(",", ".");
+    else
+      value2 = 0;
 
-onNoClick(): void {
+    this.data.valorFinal = Number(value1) +Number(value2);
+  }
+  onNoClick(): void {
     this.dialogRef.close();
     
   }
@@ -89,38 +102,7 @@ onNoClick(): void {
 
      w.document.write(document);
 
-    
-    //w.print();
 
-    //w.onload = function () { alert("It's loaded!"); console.log("here i am"); }
-    //w.onload = function() { alert("loaded"); };
-
-    //w.document.write('<script> setTimeout(function(){ alert("Hello"); }, 3000); </script>');
-    
-
-    //w.document.write(' <script> for (var i = 0; i < 5000000; i++) { console.log(" "); } </script>');
-
-    
-
-/*    for (var i = 0; i < 150000; i++) { console.log(" ");
-      if(i==149000){
-        w.document.write("AAAAAAAAAAAAAAAAAAAAAAAAAA");  
-        //w.print();  
-      }
-      
-    }
-*/
-    
-
-
-    
-    //w.close();
-
-    /*for (var i = 0; i < 1000000; i++) {
-       console.log(" ");
-    }*/
-
-    //w.print();
 
   };
 
@@ -164,9 +146,9 @@ export class AcompanhamentoComponent implements OnInit {
          else{
            this.url = "http://myas.com.br";
          }
-         
        }  
   }
+
 
   makeMockData() {
     
@@ -350,7 +332,7 @@ export class AcompanhamentoComponent implements OnInit {
     let dialogRef = this.dialog.open(ClienteAtenderComponent, {
       width: '44vw',
       data: card
-    });
+    });\
 
     dialogRef.afterClosed().subscribe(result => {
       

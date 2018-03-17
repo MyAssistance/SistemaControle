@@ -1108,6 +1108,18 @@ var AtendimentoComponent = (function () {
         this.reducedID = this.data.ordServ.substring(17, 24);
         console.log(this.reducedID);
     }
+    AtendimentoComponent.prototype.sum = function () {
+        var value1, value2;
+        if (this.data.servico != null)
+            value1 = (this.data.servico).replace(",", ".");
+        else
+            value1 = 0;
+        if (this.data.maoObra != null)
+            value2 = (this.data.maoObra).replace(",", ".");
+        else
+            value2 = 0;
+        this.data.valorFinal = Number(value1) + Number(value2);
+    };
     AtendimentoComponent.prototype.onNoClick = function () {
         this.dialogRef.close();
     };
@@ -1122,24 +1134,6 @@ var AtendimentoComponent = (function () {
         //var w = window.open("/cadastro");
         var w = window.open("");
         w.document.write(document);
-        //w.print();
-        //w.onload = function () { alert("It's loaded!"); console.log("here i am"); }
-        //w.onload = function() { alert("loaded"); };
-        //w.document.write('<script> setTimeout(function(){ alert("Hello"); }, 3000); </script>');
-        //w.document.write(' <script> for (var i = 0; i < 5000000; i++) { console.log(" "); } </script>');
-        /*    for (var i = 0; i < 150000; i++) { console.log(" ");
-              if(i==149000){
-                w.document.write("AAAAAAAAAAAAAAAAAAAAAAAAAA");
-                //w.print();
-              }
-              
-            }
-        */
-        //w.close();
-        /*for (var i = 0; i < 1000000; i++) {
-           console.log(" ");
-        }*/
-        //w.print();
     };
     ;
     AtendimentoComponent.prototype.ngOnInit = function () {
@@ -1675,7 +1669,7 @@ var AcompanhamentoComponent = (function () {
 /***/ "../../../../../src/app/pages/acompanhamento/atendimento/atendimento.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel=\"stylesheet\">\r\n\r\n<div class=\"column\" class=\"popup\"> \r\n\t<div class = \"row\">\r\n\t\t<h1 mat-dialog-title fxFlex=\"70\">Informações do Orçamento - {{reducedID}}</h1>\r\n\t\t<button fxFlexOffset=\"24\" mat-icon-button (click)=\"thermalPrintAguardando()\">\r\n\t\t\t<mat-icon>print</mat-icon>\r\n\r\n\r\n\t\t</button>\r\n\t</div>\r\n      \t<div class=\"row\">\r\n      \t   <mat-form-field fxFlexOffset=\"0\" fxFlex=\"100\">\r\n            <input [(ngModel)]=\"data.defeito\" matInput ngDefaultControl placeholder=\"Qual defeito apresentado?\">\r\n          </mat-form-field> \r\n      \t</div>\r\n\r\n      \t<div class=\"row\">\r\n      \t   <mat-form-field fxFlexOffset=\"0\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.marca\" matInput ngDefaultControl placeholder=\"Marca\">\r\n          </mat-form-field> \r\n\r\n          <mat-form-field fxFlexOffset=\"2\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.modelo\" matInput ngDefaultControl placeholder=\"Modelo\">\r\n          </mat-form-field> \r\n\r\n\t    </div> \r\n\r\n      <div class=\"row\">\r\n           <mat-form-field fxFlexOffset=\"0\" fxFlex=\"100\">\r\n            <input [(ngModel)]=\"data.realizado\" matInput ngDefaultControl placeholder=\"O que foi realizado?\">\r\n          </mat-form-field> \r\n      </div>\r\n\r\n              <div class=\"row\">\r\n           <mat-form-field fxFlexOffset=\"0\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.pecas\" matInput ngDefaultControl placeholder=\"Peças usadas\">\r\n          </mat-form-field> \r\n\r\n          <mat-form-field fxFlexOffset=\"2\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.servico\" matInput ngDefaultControl placeholder=\"Serviço\">\r\n          </mat-form-field> \r\n\r\n      </div> \r\n\r\n              <div class=\"row\">\r\n           <mat-form-field fxFlexOffset=\"0\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.maoObra\" matInput ngDefaultControl placeholder=\"Mão de Obra\">\r\n          </mat-form-field> \r\n\r\n          <mat-form-field fxFlexOffset=\"2\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.valorFinal\" matInput ngDefaultControl placeholder=\"Valor final serviço\">\r\n          </mat-form-field> \r\n\r\n      </div> \r\n\r\n      \t<div class=\"row\">\r\n\r\n           <mat-form-field fxFlex>\r\n              <mat-select \r\n                placeholder=\"Método de pagamento\"\r\n                ngDefaultControl\r\n                [(ngModel)]=\"data.metPag\" \r\n                name=\"periodo\" >\r\n                <mat-option \r\n                  *ngFor=\"let value of periodos\" [value]=\"value.value\" >\r\n                  {{ value.value }}\r\n                </mat-option>\r\n              </mat-select>\r\n            </mat-form-field> \r\n\r\n<!--           <mat-form-field fxFlexOffset=\"2\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.periodo\" matInput ngDefaultControl placeholder=\"Horário de disponibilidade\">\r\n          </mat-form-field>  -->\r\n\r\n\r\n\t    </div>\r\n\r\n            <div class=\"row\">\r\n                    <mat-form-field fxFlexOffset=\"2\" fxFlex>\r\n              <textarea matInput matTextareaAutosize matAutosizeMinRows=\"1\" placeholder=\"Observacoes\"\r\n              name=\"observacoes\"\r\n              ngDefaultControl\r\n              [(ngModel)]=\"data.observacoes\"></textarea>\r\n\r\n            </mat-form-field> \r\n      </div>\r\n      \r\n\r\n\r\n\r\n      <div fxLayout=\"row\" fxLayoutAlign=\"end center\" >\r\n      \t<my-button-bw (click)=\"onNoClick()\" label=\"CANCELAR\" style=\"margin-top: 12px; margin-right: 5px;\"  >\r\n      \t</my-button-bw>\r\n\r\n\r\n        <button class=\"my-button\" mat-button [mat-dialog-close]=\"data\" cdkFocusInitial style=\"margin-top: 12px;\">CONFIRMAR</button>\r\n  \r\n<!--         <my-button-orange [mat-dialog-close]=\"data.animal\"\r\n          fxFlexAlign=\"center\" label=\"CONFIRMAR\" style=\"margin-top: 12px;\">\r\n        </my-button-orange>  -->\r\n      </div>\r\n</div>"
+module.exports = "<link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel=\"stylesheet\">\r\n\r\n<div class=\"column\" class=\"popup\"> \r\n\t<div class = \"row\">\r\n\t\t<h1 mat-dialog-title fxFlex=\"70\">Informações do Orçamento - {{reducedID}}</h1>\r\n\t\t<button fxFlexOffset=\"24\" mat-icon-button (click)=\"thermalPrintAguardando()\">\r\n\t\t\t<mat-icon>print</mat-icon>\r\n\r\n\r\n\t\t</button>\r\n\t</div>\r\n      \t<div class=\"row\">\r\n      \t   <mat-form-field fxFlexOffset=\"0\" fxFlex=\"100\">\r\n            <input [(ngModel)]=\"data.defeito\" matInput ngDefaultControl placeholder=\"Qual defeito apresentado?\">\r\n          </mat-form-field> \r\n      \t</div>\r\n\r\n      \t<div class=\"row\">\r\n      \t   <mat-form-field fxFlexOffset=\"0\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.marca\" matInput ngDefaultControl placeholder=\"Marca\">\r\n          </mat-form-field> \r\n\r\n          <mat-form-field fxFlexOffset=\"2\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.modelo\" matInput ngDefaultControl placeholder=\"Modelo\">\r\n          </mat-form-field> \r\n\r\n\t    </div> \r\n\r\n      <div class=\"row\">\r\n           <mat-form-field fxFlexOffset=\"0\" fxFlex=\"100\">\r\n            <input [(ngModel)]=\"data.realizado\" matInput ngDefaultControl placeholder=\"O que foi realizado?\">\r\n          </mat-form-field> \r\n      </div>\r\n\r\n              <div class=\"row\">\r\n           <mat-form-field fxFlexOffset=\"0\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.pecas\" matInput ngDefaultControl placeholder=\"Peças usadas\">\r\n          </mat-form-field> \r\n\r\n          <mat-form-field fxFlexOffset=\"2\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.servico\" matInput ngDefaultControl placeholder=\"Serviço\" (blur)=\"this.sum()\">\r\n          </mat-form-field> \r\n\r\n      </div> \r\n\r\n              <div class=\"row\">\r\n           <mat-form-field fxFlexOffset=\"0\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.maoObra\" matInput ngDefaultControl placeholder=\"Mão de Obra\" (blur)=\"this.sum()\">\r\n          </mat-form-field> \r\n\r\n          <mat-form-field fxFlexOffset=\"2\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.valorFinal\" matInput ngDefaultControl placeholder=\"Valor final serviço\">\r\n          </mat-form-field> \r\n\r\n      </div> \r\n\r\n      \t<div class=\"row\">\r\n\r\n           <mat-form-field fxFlex>\r\n              <mat-select \r\n                placeholder=\"Método de pagamento\"\r\n                ngDefaultControl\r\n                [(ngModel)]=\"data.metPag\" \r\n                name=\"periodo\" >\r\n                <mat-option \r\n                  *ngFor=\"let value of periodos\" [value]=\"value.value\" >\r\n                  {{ value.value }}\r\n                </mat-option>\r\n              </mat-select>\r\n            </mat-form-field> \r\n\r\n<!--           <mat-form-field fxFlexOffset=\"2\" fxFlex=\"49\">\r\n            <input [(ngModel)]=\"data.periodo\" matInput ngDefaultControl placeholder=\"Horário de disponibilidade\">\r\n          </mat-form-field>  -->\r\n\r\n\r\n\t    </div>\r\n\r\n            <div class=\"row\">\r\n                    <mat-form-field fxFlexOffset=\"2\" fxFlex>\r\n              <textarea matInput matTextareaAutosize matAutosizeMinRows=\"1\" placeholder=\"Observacoes\"\r\n              name=\"observacoes\"\r\n              ngDefaultControl\r\n              [(ngModel)]=\"data.observacoes\"></textarea>\r\n\r\n            </mat-form-field> \r\n      </div>\r\n      \r\n\r\n\r\n\r\n      <div fxLayout=\"row\" fxLayoutAlign=\"end center\" >\r\n      \t<my-button-bw (click)=\"onNoClick()\" label=\"CANCELAR\" style=\"margin-top: 12px; margin-right: 5px;\"  >\r\n      \t</my-button-bw>\r\n\r\n\r\n        <button class=\"my-button\" mat-button [mat-dialog-close]=\"data\" cdkFocusInitial style=\"margin-top: 12px;\">CONFIRMAR</button>\r\n  \r\n<!--         <my-button-orange [mat-dialog-close]=\"data.animal\"\r\n          fxFlexAlign=\"center\" label=\"CONFIRMAR\" style=\"margin-top: 12px;\">\r\n        </my-button-orange>  -->\r\n      </div>\r\n</div>\r\n"
 
 /***/ }),
 
