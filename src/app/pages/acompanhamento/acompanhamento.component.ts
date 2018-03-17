@@ -74,7 +74,7 @@ onNoClick(): void {
 
   thermalPrintAguardando(): void{
     var document = '<html> <body onload="window.print()"> <h3 style="display: inline-block" >Ordem de serviço</h3> <img style="display: inline-block; padding-left: 110px;" src="assets/images/logo-name75.png"> <br>\
-    <span> <strong> N° Ordem: </strong>'+ this.data.reducedID +'</span> <span>&nbsp &nbsp <strong> Cliente:</strong> '+ this.data.nome +'</span> <span>&nbsp &nbsp <strong>Data:</strong> '+ this.data.dia + "/"+ this.data.mes +'</span> <br> <br> \
+    <span> <strong> N° Ordem: </strong>'+ this.reducedID +'</span> <span>&nbsp &nbsp <strong> Cliente:</strong> '+ this.data.nome +'</span> <span>&nbsp &nbsp <strong>Data:</strong> '+ this.data.dia + "/"+ this.data.mes +'</span> <br> <br> \
      <span><strong>Telefone:</strong> '+ this.data.telPrimario +'</span> <span>&nbsp &nbsp <strong>Marca:</strong> '+ this.data.marca +'</span> <span>&nbsp &nbsp <strong>Modelo:</strong> '+ this.data.modelo +'</span> <br> <br> \
     <span><strong>Defeito:</strong> '+ this.data.defeito +'</span> <br> <br> \
     <span><strong>Observações: </strong> '+ this.data.observacoes + '</span> <span style="float: right;"> __________________________ </span> </body> </html>';
@@ -174,12 +174,12 @@ export class AcompanhamentoComponent implements OnInit {
     
     const lists: ListSchema[] = [
       {
-        name: 'Visita Orçamento',
+        name: 'Entrada',
         cards: [],
         id : "l0"
       },
       {
-        name: 'Visita técnico',
+        name: 'Orçamento',
         cards: [],
         id : "l1"
       },
@@ -189,7 +189,7 @@ export class AcompanhamentoComponent implements OnInit {
         id : "l2"
       },
       {
-        name: 'Retorno Visita',
+        name: 'Em conserto',
         cards: [],
         id : "l3"
       },
@@ -708,7 +708,7 @@ export class AcompanhamentoComponent implements OnInit {
   }
 
   clicked(event){
-    let target = event.target;
+  let target = event.target;
 
     if(!Number.isInteger( parseInt(event.target.id))){
       return;
