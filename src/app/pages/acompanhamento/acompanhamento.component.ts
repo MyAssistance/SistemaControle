@@ -332,7 +332,7 @@ export class AcompanhamentoComponent implements OnInit {
     let dialogRef = this.dialog.open(ClienteAtenderComponent, {
       width: '44vw',
       data: card
-    });\
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       
